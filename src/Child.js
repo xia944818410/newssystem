@@ -1,9 +1,9 @@
 import React from 'react'
-import style from './Child.module.css'
+import style from './Child.module.scss'
 
 // console.log(style)
 export default function Child() {
-    return (
+    return ( 
         <div>
             <ul>
                 <li className={style.item}>child-11111</li>
