@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layout, Menu } from 'antd';
 import './index.css'
+import {withRouter} from 'react-router-dom'
 import { UserOutlined, VideoCameraOutlined, UploadOutlined} from '@ant-design/icons';
 
 const { Sider } = Layout
@@ -44,29 +45,52 @@ const  menuList = [
     }
   ]
 
-export default function SideMenu() {
+function SideMenu(props) {
+
+    const renderMenu = (menuList) =>{
+      return menuList?.map(item =>{
+          if(item.children){
+            return  <SubMenu 
+                      key={item.key}
+                      icon={item.icon}
+                      title={item.title}
+                    >
+                         {renderMenu(item?.children)}
+                    </SubMenu>
+          }
+          
+          return <Menu.Item 
+                    key={item.key} 
+                    icon={item.icon}
+                    onClick={()=>{
+                      console.log("item.key",props);
+                       props.history.push(item.key)
+                    }}
+                 >
+                      {item.title}
+                </Menu.Item>
+      })
+    }
+
     return (
         <Sider trigger={null} collapsible collapsed={false}>
             <div className="logo" >全球新闻发布管理系统 </div>
+                {/* defaultSelectedKeys后面的参数表示默认展示的内容*/}
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-                    <Menu.Item key="1" icon={<UserOutlined />}>
+                    {/* <Menu.Item key="1" icon={<UserOutlined />}>
                          首页
-                    </Menu.Item>
-                    <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                         nav 2
-                    </Menu.Item>
-
-                    <Menu.Item key="3" icon={<UploadOutlined />}>
-                         nav 3
-                    </Menu.Item>
-                    
-                    <SubMenu key="sub4" icon={<UploadOutlined/>} title="用户管理">
-                            <Menu.Item key="9">Option 9</Menu.Item>
-                            <Menu.Item key="10">Option 10</Menu.Item>
-                            <Menu.Item key="11">Option 11</Menu.Item>
+                    </Menu.Item> 
+                   <Menu.Item key="2" icon={<UserOutlined />}>
+                         首页2
+                    </Menu.Item>*/}
+                    {/* <SubMenu key="sub4" icon={<UploadOutlined/>} title="test">
                             <Menu.Item key="12">Option 12</Menu.Item>
-                    </SubMenu>
+                            <Menu.Item key="12">Option 34</Menu.Item>
+                    </SubMenu>  */}
+                    {renderMenu(menuList)}
+
                 </Menu>
         </Sider>
     )
 }
+export default withRouter(SideMenu)
