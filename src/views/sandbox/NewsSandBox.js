@@ -36,7 +36,7 @@ export default function NewsSandBox() {
                         <Redirect  from="/" to="/home" exact/>
                         <Route path="*" component={Nopermission}/>
                     </Switch>
-                </Content> 
+                </Content>
             </Layout>
         </Layout>
     )
