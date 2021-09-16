@@ -58,7 +58,7 @@ function SideMenu(props) {
     const [menu, setMenu] = useState([])
     useEffect(()=>{
        axios.get("http://localhost:5000/rights?_embed=children").then(res=>{
-         console.log("sidemenu",res.data);
+        //  console.log("sidemenu",res.data);
         setMenu(res.data)
        })
     },[])
@@ -70,7 +70,7 @@ function SideMenu(props) {
     const renderMenu = (menuList) =>{
       return menuList.map(item =>{
           if(item.children?.length>0 && checkPagePermission(item)){
-            return  <SubMenu 
+            return  <SubMenu
                       key={item.key}
                       icon={iconList[item.key]}
                       title={item.title}
@@ -91,7 +91,7 @@ function SideMenu(props) {
                     </Menu.Item>
       })
     }
-    // console.log("p",props.location.pathname);
+    console.log("p",props.location.pathname);
     const selectKeys = [props.location.pathname]
     const openKey = ["/" + props.location.pathname.split("/")[1]]
     return (

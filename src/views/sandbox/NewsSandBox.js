@@ -24,10 +24,11 @@ export default function NewsSandBox() {
                 <Content
                     className="site-layout-background"
                     style={{ 
-                    margin: '24px 16px',
-                    padding: 24,
-                    minHeight: 280,
-                }}>
+                            margin: '24px 16px',
+                            padding: 24,
+                            minHeight: 280,
+                           }}
+                >
                     <Switch>
                         <Route path="/home" component={Home}/>
                         <Route path="/user-manage/list" component={UserList}/>
