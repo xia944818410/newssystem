@@ -78,7 +78,7 @@ function SideMenu(props) {
                          {renderMenu(item.children)}
                     </SubMenu>
           }
-           return   checkPagePermission(item) &&
+            return   checkPagePermission(item) &&
                     <Menu.Item 
                         key={item.key} 
                         icon={iconList[item.key]}
@@ -91,8 +91,9 @@ function SideMenu(props) {
                     </Menu.Item>
       })
     }
-    console.log("p",props.location.pathname);
+    // console.log("p",props.location.pathname);
     const selectKeys = [props.location.pathname]
+    // console.log("props.location.pathname",props.location.pathname);
     const openKey = ["/" + props.location.pathname.split("/")[1]]
     return (
         <Sider trigger={null} collapsible collapsed={false}>
@@ -100,13 +101,15 @@ function SideMenu(props) {
                     <div className="logo" >全球新闻发布管理系统 </div>
                         {/* defaultSelectedKeys后面的参数表示默认展示的内容*/}
                     <div style={{flex:1,"overflow":"auto"}}>        
-                            <Menu theme="dark" mode="inline" 
+                            <Menu theme="dark" mode="inline"
+                                  //selectedKeys为当前选中的菜单项 key 数组，也即默认选中的二级菜单项
                                   selectedKeys={selectKeys}
+                                  //defaultOpenKeys为初始展开的 SubMenu 菜单项 key 数组，也即默认选中的一级菜单项
                                   defaultOpenKeys={openKey}
                             >
                                 {/* <Menu.Item key="1" icon={<UserOutlined />}>
                                     首页1
-                                </Menu.Item> 
+                                </Menu.Item>
                             <Menu.Item key="2" icon={<UserOutlined />}>
                                     首页2
                                 </Menu.Item>

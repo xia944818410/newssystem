@@ -1,9 +1,16 @@
 import React, {useState,useEffect} from 'react'
-import { Table,Tag,Button,Modal} from "antd"
+import { Table,Tag,Button,Modal,Popover, Switch} from "antd"
 import axios from 'axios'
 import {EditOutlined ,DeleteOutlined,ExclamationCircleOutlined } from "@ant-design/icons"
+import Item from 'antd/lib/list/Item';
 // import { SearchOutlined } from '@ant-design/icons';
 const { confirm } = Modal;
+const content = (
+    <div> 
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
 export default function RightList() {
 
     const  [dataSource, setdataSource] = useState([])
@@ -43,7 +50,7 @@ export default function RightList() {
                        >
                         {key}
                       </Tag>
-          }
+            }
         },
         {
             title:"操作",
@@ -51,22 +58,59 @@ export default function RightList() {
             render:(item)=>{
                 /* console.log(item); */
                 return <div>
-                            <Button 
+                            {/*此button为红色的删除按钮 */}
+                            <Button
                                 danger
                                 shape="circle" 
                                 icon={<DeleteOutlined/>}
-                                onClick={()=>confirmMethod(item)}
+                                onClick={()=>{
+                                    confirmMethod(item)
+                                }}
                             />
-                            <Button 
-                                type="primary" 
-                                shape="circle" 
-                                icon={<EditOutlined />}
-                            />
+                            <Popover
+                                     title="页面配置项" 
+                                     /*  二级列表item.pagepermisson不存在时，按钮为灰色且不可点击*/
+                                     trigger={item.pagepermisson===undefined?"":"click"}
+                                     content={
+                                              <div style={{textAlign:"center"}}>
+                                                     {/* switch为页面配置项按钮，checked为真亮起 */}
+                                                    <Switch 
+                                                         checked={item.pagepermisson}
+                                                         onChange={()=>{
+                                                             switchMethod(item)
+                                                         }}
+                                                    >
+                                                    </Switch>
+                                              </div>
+                                     }
+                            >
+                                {/* button是绿色的小笔按钮，disabled为真亮起 */}
+                                <Button
+                                    type="primary" 
+                                    shape="circle" 
+                                    icon={<EditOutlined />}
+                                    /*  二级列表item.pagepermisson不存在时，按钮始终为灰色*/
+                                    disabled={item.pagepermisson===undefined}
+                                />
+                            </Popover>
                        </div>
             }
         }
     ]
-     const confirmMethod = (item)=>{
+    const switchMethod = (item)=>{
+        item.pagepermisson = item.pagepermisson ===1 ? 0 : 1
+        // console.log("wfw",item);
+        setdataSource([...dataSource])
+        if(item.grade===1){
+              /* patch有补丁效果，对于不变的数据就不会更新，只改变更新的数据*/
+            axios.patch(`http://localhost:5000/rights/${item.id}`,
+                 {pagepermisson:item.pagepermisson})
+        }else{
+            axios.patch(`http://localhost:5000/children/${item.id}`,
+                 {pagepermisson:item.pagepermisson})
+        }
+    }
+    const confirmMethod = (item)=>{
             confirm({
                 title: '你确定要删除吗?',
                 icon: <ExclamationCircleOutlined />,
@@ -93,10 +137,8 @@ export default function RightList() {
                     // console.log("grade",dataSource);
                     setdataSource([...dataSource])
                     // setdataSource(dataSource)
-
                  axios.delete(`http://localhost:5000/children/${item.id}`)
            }
-      
      }
     return (
         <div>
