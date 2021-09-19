@@ -2,15 +2,9 @@ import React, {useState,useEffect} from 'react'
 import { Table,Tag,Button,Modal,Popover, Switch} from "antd"
 import axios from 'axios'
 import {EditOutlined ,DeleteOutlined,ExclamationCircleOutlined } from "@ant-design/icons"
-import Item from 'antd/lib/list/Item';
+// import Item from 'antd/lib/list/Item';
 // import { SearchOutlined } from '@ant-design/icons';
 const { confirm } = Modal;
-const content = (
-    <div> 
-      <p>Content</p>
-      <p>Content</p>
-    </div>
-  );
 export default function RightList() {
 
     const  [dataSource, setdataSource] = useState([])
