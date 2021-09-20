@@ -61,6 +61,7 @@ export default function RightList() {
                                     confirmMethod(item)
                                 }}
                             />
+                            {/* popover为气泡卡片：点击绿色小笔按钮，会出现页面配置项功能按钮*/}
                             <Popover
                                      title="页面配置项" 
                                      /*  二级列表item.pagepermisson不存在时，按钮为灰色且不可点击*/
@@ -85,7 +86,7 @@ export default function RightList() {
                                     icon={<EditOutlined />}
                                     /*  二级列表item.pagepermisson不存在时，按钮始终为灰色*/
                                     disabled={item.pagepermisson===undefined}
-                                />
+                                /> 
                             </Popover>
                        </div>
             }
