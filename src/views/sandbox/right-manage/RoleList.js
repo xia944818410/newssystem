@@ -11,8 +11,10 @@ export default function RoleList() {
     const [rightList, setrightList] = useState([])
     /* 设置modal框visible初始值为false,isModalVisible为其状态*/
     const [isModalVisible, setisModalVisible] = useState(false)
-
-    const [currentRights, setcurrentRights] = useState()
+    /* currentRights：勾选或者取消勾选后的框值 */
+    const [currentRights, setcurrentRights] = useState([])
+    /*  currentId可以简单理解为角色列表中对应的ID123*/
+    const [currentId, setcurrentId] = useState(0)
     const columns = [
         {
             title: 'ID',
@@ -44,10 +46,12 @@ export default function RoleList() {
                                 type="primary" 
                                 shape="circle" 
                                 icon={<EditOutlined />}
-                                /* 此onclick事件为控制模态框的弹出 */
                                 onClick={()=>{
+                                    /* 触发点击事件后，setisModalVisible(true)，弹出模态框 */
                                     setisModalVisible(true)
+                                    /* 触发点击后，需要勾选的框值 */
                                     setcurrentRights(item.rights)
+                                    setcurrentId(item.id)
                                 }}
                             />
                        </div>
@@ -90,7 +94,24 @@ export default function RoleList() {
 
     /* 确认按钮 */
     const handleOk = ()=>{
-        setisModalVisible()
+        /* console.log(currentRights); */
+        setisModalVisible(false)  /* 先隐藏模态框 */
+        /* 同步dataSource, ID 1,2,3; 
+           ID=1时点击1的操作小笔,此时的map函数刚好匹配上，勾选或者取消勾选都会触发*onCheck函数,
+           从而更新currentRight;而ID=2,3不会改变，返回原来的值*/
+        setdataSource(dataSource.map(item=>{
+            if(item.id===currentId){
+                return {
+                    ...item,
+                    rights:currentRights   /* 勾选或者取消勾选后改变了currentRights值，从而更新了rights，在进行对页面进行从新勾选*/
+                }
+            }
+            return item
+        }))
+         /* patch有补丁效果，对于不变的数据就不会更新，只改变更新的数据*/
+        axios.patch(`http://localhost:5000/roles/${currentId}`,{
+              rights:currentRights
+        })
     }
 
     /* 取消按钮 */
@@ -98,10 +119,13 @@ export default function RoleList() {
         setisModalVisible(false)
     }
 
-     /*  onCheck:勾选或者取消勾选复选框 */
+     /*  onCheck:勾选或者取消勾选复选框,
+         setcurrentRights(checkKeys)作用是：得到更新后的checkKeys,并重新获取数据
+     */
     const onCheck = (checkKeys)=>{
-        //    console.log(checkKeys);
-           setcurrentRights(checkKeys)
+        //    console.log(checkKeys); 点击勾选框之后，打印出来的checkKeys是除勾选框之外的路径
+           setcurrentRights(checkKeys.checked)
+           /*  setcurrentRights(checkKeys.checked)：获得勾选或者取消勾选后的内容，再次更新需要勾选的条款*/
     }
 
     return (
@@ -118,7 +142,7 @@ export default function RoleList() {
             </Table>
             {/* 模态框 */}
             <Modal title="权限分配"
-                   /* 刚开始isModalVisible初始值为false，modal不展示，visible控制模态框的弹出  */
+                   /* 刚开始isModalVisible初始值为false，模态框不展示，visible为true时弹出模态框  */
                    visible={isModalVisible} 
                    onOk={handleOk} 
                    onCancel={handleCancel}
@@ -127,15 +151,15 @@ export default function RoleList() {
                     <Tree
                         /* checkable: 显示勾选框 */
                         checkable
-                        /* checkedKeys是默认勾选框， 
-                           currentRights 拿到的是item.rights路径，也即是rightList对应的key值，
+                        /* checkedKeys是默认勾选框,currentRights拿到的是item.rights路径,也即是rightList对应的key值,
+                           即是要从rightList列表中默认勾选currentRights(http://localhost:5000/roles,里面的item.rights)
                         */
                         checkedKeys={currentRights}
                         /*  onCheck:勾选或者取消勾选复选框 */
                         onCheck={onCheck}
                         /* 父子节点选中状态不再关联 */
                         checkStrictly = {true}
-                        /* treeData为接收到的数据 */ 
+                         /*treeData为http://localhost:5000/rights?_embed=children请求得到的数据，始终保持不变*/
                         treeData={rightList}
                     />
             </Modal>
