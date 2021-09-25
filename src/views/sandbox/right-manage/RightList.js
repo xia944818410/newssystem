@@ -64,7 +64,7 @@ export default function RightList() {
                             {/* popover为气泡卡片：点击绿色小笔按钮，会出现页面配置项功能按钮*/}
                             <Popover
                                      title="页面配置项" 
-                                     /*  二级列表item.pagepermisson不存在时，按钮为灰色且不可点击*/
+                                     /*  二级列表item.pagepermisson不存在时，按钮为灰色且不可点击，禁用此次对此点击事件*/
                                      trigger={item.pagepermisson===undefined?"":"click"}
                                      content={
                                               <div style={{textAlign:"center"}}>
@@ -86,15 +86,16 @@ export default function RightList() {
                                     icon={<EditOutlined />}
                                     /*  二级列表item.pagepermisson不存在时，按钮始终为灰色*/
                                     disabled={item.pagepermisson===undefined}
-                                /> 
+                                />
                             </Popover>
                        </div>
             }
         }
     ]
     const switchMethod = (item)=>{
-        item.pagepermisson = item.pagepermisson ===1 ? 0 : 1
+        item.pagepermisson = item.pagepermisson === 1 ? 0 : 1
         // console.log("wfw",item);
+        /* 如果不进行此操作会点不动按钮 */
         setdataSource([...dataSource])
         if(item.grade===1){
               /* patch有补丁效果，对于不变的数据就不会更新，只改变更新的数据*/

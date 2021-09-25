@@ -141,7 +141,8 @@ export default function RoleList() {
             >
             </Table>
             {/* 模态框 */}
-            <Modal title="权限分配"
+            <Modal 
+                   title="权限分配"
                    /* 刚开始isModalVisible初始值为false，模态框不展示，visible为true时弹出模态框  */
                    visible={isModalVisible} 
                    onOk={handleOk} 
