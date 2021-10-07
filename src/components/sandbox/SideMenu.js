@@ -7,44 +7,6 @@ import axios from "axios"
 const { Sider } = Layout
 const { SubMenu } = Menu;
 
-//模拟数组结构
-// const  menuList = [
-//     {
-//       key:"/home",
-//       title:"首页",
-//       icon:<UserOutlined />
-//     },
-//     {
-//       key:"/user-manage",
-//       title:"用户管理",
-//       icon:<UserOutlined />,
-//       children:[
-//         {
-//           key:"/user-manage/list",
-//           title:"用户列表",
-//           icon:<UserOutlined />
-//         }
-//       ]
-//     },
-//     {
-//       key:"/right-manage",
-//       title:"权限管理",
-//       icon:<UserOutlined />,
-//       children:[
-//         {
-//           key:"/right-manage/role/list",
-//           title:"角色列表",
-//           icon:<UserOutlined />
-//         },
-//         {
-//           key:"/right-manage/right/list",
-//           title:"权限列表",
-//           icon:<UserOutlined />
-//         }
-//       ]
-//     }
-//   ]
-
 const iconList = {
     "/home":<UserOutlined />,
     "/user-manage":<UserOutlined />,
