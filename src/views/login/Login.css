@@ -1,0 +1,20 @@
+.formContainer{
+    position: fixed;
+    background-color: rgba(0,0,0,0.7);
+    width:500px;
+    height:300px;
+    top:50%;
+    left:50%; 
+    transform: translate(-50%,-50%); 
+    /* margin-left: 28%; */
+    padding:20px;
+    z-index: 100;
+}
+
+.login-title{
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    font-size: 30px;
+    color: white;
+}
