@@ -1,16 +1,26 @@
 import React from 'react'
-import {Form,Button,Input} from "antd"
+import {Form,Button,Input, message} from "antd"
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import "./Login.css"
 import Particles from 'react-particles-js';
 // import Particles from '_react-particles-js@3.5.3@react-particles-js'
 import axios from 'axios'
-export default function Login() {
+export default function Login(props) {
     /* onFinish是表单收集的数据 */
-    const onFinish = (values)=>{
+    const onFinish = (values)=>{ 
         /* 打印的values值就是表单里接收到的数据 */
-        /* console.log("value",values); */
-
+        // console.log("value",values);
+        
+        axios.get(`http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`).then(res=>{
+            console.log(res.data)
+            if(res.data.length===0){
+                message.error("用户名或密码不匹配")
+            }else{
+              // console.log("res",res.data)
+                localStorage.setItem("token",JSON.stringify(res.data[0]))
+                props.history.push("/")
+            }
+        })
     }
     return (
         <div style={{background: 'rgb(35, 39, 65)', height:'100%',overflow:'hidden'}}>

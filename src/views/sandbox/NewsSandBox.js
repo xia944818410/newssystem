@@ -23,7 +23,7 @@ export default function NewsSandBox() {
                 <TopHeader></TopHeader>
                 <Content
                     className="site-layout-background"
-                    style={{ 
+                    style={{
                             margin: '24px 16px',
                             padding: 24,
                             minHeight: 280,

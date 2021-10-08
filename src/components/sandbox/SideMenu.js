@@ -19,14 +19,17 @@ const iconList = {
 function SideMenu(props) {
     const [menu, setMenu] = useState([])
     useEffect(()=>{
-       axios.get("http://localhost:5000/rights?_embed=children").then(res=>{
+        axios.get("http://localhost:5000/rights?_embed=children").then(res=>{
         //  console.log("sidemenu",res.data);
         setMenu(res.data)
        })
     },[])
-
+    /*  rights:拿到当前登录用户所具有的权限列表 */
+    // console.log("11",JSON.parse(localStorage.getItem("token")));
+    const {role:{rights}} = JSON.parse(localStorage.getItem("token"))
+    /*  rights.includes(item.key):rights里面的权限必须包含，导航栏item.key，且为真，侧边栏才有机会渲染*/
     const checkPagePermission = (item)=>{
-        return  item.pagepermisson===1
+        return  item.pagepermisson===1 && rights.includes(item.key)
     }
 
     const renderMenu = (menuList) =>{

@@ -1,6 +1,5 @@
 import React,{useState} from 'react'
 import { Layout ,Menu, Dropdown, Avatar } from 'antd';
-
 import { MenuUnfoldOutlined,MenuFoldOutlined ,UserOutlined} from '@ant-design/icons';
 import {withRouter} from 'react-router-dom'
 const { Header } = Layout;
@@ -10,10 +9,13 @@ function TopHeader(props) {
     const changeCollapsed = ()=>{
         setCollapsed(!collapsed)
     }
+    /* localStorage.getItem("token")是表单收集的数据;结构解析取出roleName和username*/
+    const {role:{rights,roleName},username} = JSON.parse(localStorage.getItem("token"))
+    
     const menu = (
         <Menu>
             <Menu.Item>
-               超级管理员
+                {roleName}
             </Menu.Item>
             <Menu.Item 
                danger
@@ -35,7 +37,7 @@ function TopHeader(props) {
                 : <MenuFoldOutlined onClick={changeCollapsed}/>
             }
             <div style={{float:"right"}}>
-                <span>欢迎admin回来</span>
+                <span>欢迎{username}回来</span>
                 <Dropdown overlay={menu}>
                     <Avatar size="large" icon={<UserOutlined />} />
                 </Dropdown>
