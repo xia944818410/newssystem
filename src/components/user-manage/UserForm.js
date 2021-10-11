@@ -8,6 +8,53 @@ const UserForm = forwardRef((props,ref) =>{
     useEffect(()=>{
         setisDisabled(props.isUpdateDisabled)
     },[props.isUpdateDisabled])
+    /* 判断是以超管理员，区域管理员，还是区域编辑的身份进入 */
+    console.log( JSON.parse(localStorage.getItem("token")));
+    const {roleId,region} = JSON.parse(localStorage.getItem("token"))
+    /* 禁用区域列表的回调 */
+    const checkRegionDisabled = (item)=>{
+        /*对更新用户操作  */
+        if(props.isUpdate){
+            if(roleId===1){
+                /* return false表示禁用为假 */
+                return false
+            }else{
+                /* return true表示禁用为真*/
+                 return true
+            }
+        }
+        /* 对添加用户操作 */
+        else{
+            if(roleId===1){
+                return false
+            }else{
+                /*  筛选出添加用户时默认的区域 */
+                return item.value!==region
+            }
+        }
+    }
+    /* 禁用角色列表的回调 */
+    const checkRoleDisabled =(item)=>{
+        if(props.isUpdate){
+            if(roleId===1){
+                /* return false表示禁用为假 */
+                return false
+            }else{
+                /* return true表示禁用为真*/
+                return true
+            }
+        }
+        /* 对添加用户操作 */
+        else{
+            if(roleId===1){
+                return false
+            }else{
+                /* 筛选出添加用户时默认的角色 http://localhost:5000/roles 数据在这里获取得到的 */
+                /* 只有当角色为区域编辑时不禁用*/
+                return item.id!==3
+            }
+        }
+    }
     return (
         <Form
            ref={ref}
@@ -50,6 +97,8 @@ const UserForm = forwardRef((props,ref) =>{
                             <Option
                                 value={item.value}
                                 key={item.id}
+                                /* 判断是否禁用区域的按钮，当以管理员身份进来的时候，正常显示区域选择；当以另外身份进来的时候，禁用区域选择 */
+                                disabled={checkRegionDisabled(item)}
                             >
                                 {item.title}
                             </Option>
@@ -87,6 +136,7 @@ const UserForm = forwardRef((props,ref) =>{
                             <Option 
                                 value={item.value}
                                 key={item.id}
+                                disabled={checkRoleDisabled(item)}
                             >
                                     {item.roleName}
                             </Option>

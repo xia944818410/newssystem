@@ -63,7 +63,7 @@ function SideMenu(props) {
     return (
         <Sider trigger={null} collapsible collapsed={false}>
               <div style={{display:"flex",height:"100%","flexDirection":"column"}}>  
-                    <div className="logo" >react</div>
+                    <div className="logo" >新闻管理发布系统</div>
                         {/* defaultSelectedKeys后面的参数表示默认展示的内容*/}
                     <div style={{flex:1,"overflow":"auto"}}>        
                             <Menu theme="dark" mode="inline"

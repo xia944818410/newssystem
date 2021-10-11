@@ -118,14 +118,13 @@ export default function RoleList() {
     const handleCancel = ()=>{
         setisModalVisible(false)
     }
-
      /*  onCheck:勾选或者取消勾选复选框,
          setcurrentRights(checkKeys)作用是：得到更新后的checkKeys,并重新获取数据
      */
     const onCheck = (checkKeys)=>{
         //    console.log(checkKeys); 点击勾选框之后，打印出来的checkKeys是除勾选框之外的路径
            setcurrentRights(checkKeys.checked)
-           /*  setcurrentRights(checkKeys.checked)：获得勾选或者取消勾选后的内容，再次更新需要勾选的条款*/
+        /*  setcurrentRights(checkKeys.checked)：获得勾选或者取消勾选后的内容，再次更新需要勾选的条款*/
     }
 
     return (
@@ -142,27 +141,27 @@ export default function RoleList() {
             </Table>
             {/* 模态框 */}
             <Modal 
-                   title="权限分配"
-                   /* 刚开始isModalVisible初始值为false，模态框不展示，visible为true时弹出模态框  */
-                   visible={isModalVisible} 
-                   onOk={handleOk} 
-                   onCancel={handleCancel}
+                title="权限分配"
+                /* 刚开始isModalVisible初始值为false，模态框不展示，visible为true时弹出模态框  */
+                visible={isModalVisible} 
+                onOk={handleOk} 
+                onCancel={handleCancel}
             >
-                    {/* Tree为权限分配下方的列表 */}
-                    <Tree
-                        /* checkable: 显示勾选框 */
-                        checkable
-                        /* checkedKeys是默认勾选框,currentRights拿到的是item.rights路径,也即是rightList对应的key值,
-                           即是要从rightList列表中默认勾选currentRights(http://localhost:5000/roles,里面的item.rights)
-                        */
-                        checkedKeys={currentRights}
-                        /*  onCheck:勾选或者取消勾选复选框 */
-                        onCheck={onCheck}
-                        /* 父子节点选中状态不再关联 */
-                        checkStrictly = {true}
-                         /*treeData为http://localhost:5000/rights?_embed=children请求得到的数据，始终保持不变*/
-                        treeData={rightList}
-                    />
+                {/* Tree为权限分配下方的列表 */}
+                <Tree
+                    /* checkable: 显示勾选框 */
+                    checkable
+                    /* checkedKeys是默认勾选框,currentRights拿到的是item.rights路径,也即是rightList对应的key值,
+                        即是要从rightList列表中默认勾选currentRights(http://localhost:5000/roles,里面的item.rights)
+                    */
+                    checkedKeys={currentRights}
+                    /*  onCheck:勾选或者取消勾选复选框 */
+                    onCheck={onCheck}
+                    /* 父子节点选中状态不再关联 */
+                    checkStrictly = {true}
+                        /*treeData为http://localhost:5000/rights?_embed=children请求得到的数据，始终保持不变*/
+                    treeData={rightList}
+                />
             </Modal>
         </div>
     )

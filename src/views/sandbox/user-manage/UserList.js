@@ -20,15 +20,23 @@ export default function UserList() {
     const  [current, setcurrent] = useState(null)
     const addForm = useRef(null)
     const updateForm = useRef(null)
+    /*  JSON.parse(localStorage.getItem("token")))是进入相应用户名下打印出来的值 */
+    // console.log('1223',JSON.parse(localStorage.getItem("token")));
+    /* roleId=1---超级管理员，roleId=2---区域管理员，roleId=3---区域编辑，region对应区域 ,username用户名*/
+    const {roleId,region,username} = JSON.parse(localStorage.getItem("token"))
     /*  得到用户列表数据：区域 角色列表 用户名 用户状态 操作*/
     useEffect(()=>{
         axios.get("http://localhost:5000/users?_expand=role"
         ).then(res=>{
             const list = res.data
-            setdataSource(list)
+            setdataSource(roleId===1 ? list:[
+                /* 筛选出来当前的登录用户 */
+                ...list.filter(item=>item.username===username),
+                ...list.filter(item=>item.region===region && item.roleId===3)
+            ])
         })
-    },[])
-    /* 添加用户模态框里面的区域列表数据获取*/
+    },[roleId,region,username])
+    /*  添加用户模态框里面的区域列表数据获取*/
     useEffect(()=>{
         axios.get("http://localhost:5000/regions").then(res=>{
             const list = res.data
@@ -255,7 +263,7 @@ export default function UserList() {
                 }}
                 /* 确认回调,调用updateFormOk函数 */
                 onOk={() => addFormOk()}
-             >/
+             >
                 {/* 添加用户 */}
                 <UserForm
                     regionList={regionList}
@@ -282,13 +290,15 @@ export default function UserList() {
                 /* 确认回调,调用updateFormOk函数 */
                 onOk={() => updateFormOk()}
             >
-                {/* 添加用户 */}
+                {/* 更新用户 */}
                 <UserForm
                     regionList={regionList}
                     roleList={roleList}
                     ref={updateForm}
                     /*  传递给子组件的isUpdateDisabled值 */
                     isUpdateDisabled={isUpdateDisabled}
+                    /* 区别是更新还是新建用户，默认为false */
+                    isUpdate={true}
                 >
                 </UserForm>
             </Modal>
