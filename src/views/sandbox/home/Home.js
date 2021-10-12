@@ -10,6 +10,7 @@ export default function Home() {
     return (
         <div>
            <Button type="primary" onClick={ajax}>Button</Button>
+           <Button type="primary" onClick={ajax}>Button</Button>
         </div>
     )
 }
