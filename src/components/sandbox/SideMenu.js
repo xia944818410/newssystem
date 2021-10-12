@@ -45,7 +45,7 @@ function SideMenu(props) {
           }
             return   checkPagePermission(item) &&
                     <Menu.Item 
-                        key={item.key} 
+                        key={item.key}
                         icon={iconList[item.key]}
                         onClick={()=>{
                         //   console.log("item.key",props);
