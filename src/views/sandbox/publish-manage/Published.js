@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Published() {
-    return (
-        <div>
-            Published
-        </div>
-    )
+  return <div>Published</div>;
 }

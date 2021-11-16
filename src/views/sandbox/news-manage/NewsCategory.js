@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function NewsCategory() {
-    return (
-        <div>
-            NewsCategory
-        </div>
-    )
+  return <div>NewsCategory</div>;
 }

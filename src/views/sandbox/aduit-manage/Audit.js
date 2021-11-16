@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function Audit() {
-    return (
-        <div>
-            Audit
-        </div>
-    )
+  return <div>Audit</div>;
 }
