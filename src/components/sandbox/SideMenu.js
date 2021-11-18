@@ -24,15 +24,17 @@ function SideMenu(props) {
   const [menu, setMenu] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
-      //  console.log("sidemenu",res.data);
+      // console.log("sidemenu", res.data);
       setMenu(res.data);
     });
   }, []);
+
   /*  rights:拿到当前登录用户所具有的权限列表 */
-  // console.log("11",JSON.parse(localStorage.getItem("token")));
+  // console.log("11", JSON.parse(localStorage.getItem("token")));
   const {
     role: { rights },
   } = JSON.parse(localStorage.getItem("token"));
+
   /*  rights.includes(item.key):rights里面的权限必须包含，导航栏item.key，且为真，侧边栏才有机会渲染*/
   const checkPagePermission = (item) => {
     return item.pagepermisson === 1 && rights.includes(item.key);
@@ -53,7 +55,7 @@ function SideMenu(props) {
             key={item.key}
             icon={iconList[item.key]}
             onClick={() => {
-              //   console.log("item.key",props);
+              // console.log("item.key", props);
               props.history.push(item.key);
             }}
           >
@@ -63,12 +65,16 @@ function SideMenu(props) {
       );
     });
   };
-  // console.log("p",props.location.pathname);
+
+  console.log("p", props.location);
   const selectKeys = [props.location.pathname];
+
   // console.log("props.location.pathname",props.location.pathname);
   const openKey = ["/" + props.location.pathname.split("/")[1]];
+
   return (
     <Sider trigger={null} collapsible collapsed={false}>
+      {/* display="flex",flex-direction="column",flex布局，代表主轴为垂直方向*/}
       <div style={{ display: "flex", height: "100%", flexDirection: "column" }}>
         <div className="logo">新闻管理发布系统</div>
         {/* defaultSelectedKeys后面的参数表示默认展示的内容*/}
@@ -82,18 +88,19 @@ function SideMenu(props) {
             defaultOpenKeys={openKey}
           >
             {/* <Menu.Item key="1" icon={<UserOutlined />}>
-                                    首页1
-                                </Menu.Item>
-                            <Menu.Item key="2" icon={<UserOutlined />}>
-                                    首页2
-                                </Menu.Item>
-                                <Menu.Item key="3" icon={<UserOutlined />}>
-                                    首页3
-                                </Menu.Item>
-                                <SubMenu key="1" icon={<UploadOutlined/>} title="首页4">
-                                        <Menu.Item key="11">Option 12</Menu.Item>
-                                        <Menu.Item key="2545">Option 34</Menu.Item>
-                                </SubMenu>  */}
+                    首页1
+                </Menu.Item>
+                <Menu.Item key="2" icon={<UserOutlined />}>
+                    首页2
+                </Menu.Item>
+                <Menu.Item key="3" icon={<UserOutlined />}>
+                    首页3
+                </Menu.Item>
+                <SubMenu key="1" icon={<UploadOutlined/>} title="首页4">
+                    <Menu.Item key="11">Option 12</Menu.Item>
+                    <Menu.Item key="2545">Option 34</Menu.Item>
+                </SubMenu>  
+             */}
             {renderMenu(menu)}
           </Menu>
         </div>

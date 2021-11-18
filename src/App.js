@@ -1,5 +1,5 @@
-import IndexRouter from './router/IndexRouter'
-import './App.css'
+import IndexRouter from "./router/IndexRouter";
+import "./App.css";
 export default function App() {
-  return  <IndexRouter> </IndexRouter>
+  return <IndexRouter> </IndexRouter>;
 }
