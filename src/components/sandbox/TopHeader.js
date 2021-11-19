@@ -13,7 +13,8 @@ function TopHeader(props) {
   const changeCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  /* localStorage.getItem("token")是表单收集的数据;结构解析取出roleName和username*/
+  /* localStorage.getItem("token")是login组件中localStorage.setItem所存入的数据;
+     结构解析取出roleName和username*/
   const {
     role: { rights, roleName },
     username,

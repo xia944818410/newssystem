@@ -10,17 +10,17 @@ export default function Login(props) {
   const onFinish = (values) => {
     /* 打印的values值就是表单里接收到的数据 */
     // console.log("value",values);
-
     axios
       .get(
         `http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
       )
       .then((res) => {
-        console.log(res.data);
+        console.log("789",res.data);
         if (res.data.length === 0) {
           message.error("用户名或密码不匹配");
         } else {
-          // console.log("res",res.data)
+          console.log("res",res.data)
+          /* 登录成功后把JSON.stringify(res.data[0]存入到localStorage中，使用localStorage.getItem("token")即可拿到所以数据*/
           localStorage.setItem("token", JSON.stringify(res.data[0]));
           props.history.push("/");
         }

@@ -66,7 +66,7 @@ function SideMenu(props) {
     });
   };
 
-  console.log("p", props.location);
+  // console.log("p", props.location);
   const selectKeys = [props.location.pathname];
 
   // console.log("props.location.pathname",props.location.pathname);
