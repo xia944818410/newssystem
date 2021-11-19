@@ -1,12 +1,18 @@
 import React from "react";
+
+import axios from "axios";
+
 import { Form, Button, Input, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import "./Login.css";
 import Particles from "react-particles-js";
-// import Particles from '_react-particles-js@3.5.3@react-particles-js'
-import axios from "axios";
+
+import "./Login.css";
+
+/* Login组件为路由组件，使用Router包括起来的（在IndexRouter组件中），
+   react-router 的 history、location、match 三个对象会传入到props对象上，可直接使用props.history属性 */
 export default function Login(props) {
   /* onFinish是表单收集的数据 */
+  console.log("123465",props)
   const onFinish = (values) => {
     /* 打印的values值就是表单里接收到的数据 */
     // console.log("value",values);
@@ -15,12 +21,13 @@ export default function Login(props) {
         `http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
       )
       .then((res) => {
-        console.log("789",res.data);
+        // console.log("789", res.data);
         if (res.data.length === 0) {
           message.error("用户名或密码不匹配");
         } else {
-          console.log("res",res.data)
-          /* 登录成功后把JSON.stringify(res.data[0]存入到localStorage中，使用localStorage.getItem("token")即可拿到所以数据*/
+          console.log("res", res.data);
+          /* 某个管理员登录成功后把JSON.stringify(res.data[0])存入到localStorage中，这里拿到的数据是指某个管理员下的全部数据
+             使用localStorage.getItem("token")即可拿到所以数据*/
           localStorage.setItem("token", JSON.stringify(res.data[0]));
           props.history.push("/");
         }

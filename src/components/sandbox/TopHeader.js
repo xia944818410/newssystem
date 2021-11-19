@@ -8,6 +8,9 @@ import {
 import { withRouter } from "react-router-dom";
 const { Header } = Layout;
 
+/* TopHeader组件要想使用props的history属性，需要引入react-router-dom中的WithRouter属性，
+   并默认暴露WithRouter(TopHeader),此时react-router 的 history、location、match 三个对象会传入到props对象上，
+   可直接使用props.history属性 */
 function TopHeader(props) {
   const [collapsed, setCollapsed] = useState(false);
   const changeCollapsed = () => {
