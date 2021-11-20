@@ -16,6 +16,7 @@ function TopHeader(props) {
   const changeCollapsed = () => {
     setCollapsed(!collapsed);
   };
+  
   /* localStorage.getItem("token")是login组件中localStorage.setItem所存入的数据;
      结构解析取出roleName和username*/
   const {
@@ -52,6 +53,7 @@ function TopHeader(props) {
           <span style={{ color: "#1890ff" }}>{username}</span>
           回来
         </span>
+        {/* Avatar为黑色圆圈 */}
         <Dropdown overlay={menu}>
           <Avatar size="large" icon={<UserOutlined />} />
         </Dropdown>

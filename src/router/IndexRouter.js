@@ -7,7 +7,6 @@ export default function IndexRouter() {
     <HashRouter>
       <Switch>
         <Route path="/login" component={Login} />
-        {/* <Route path="/" component={NewsSandBox}/> */}
         <Route
           path="/"
           render={() =>

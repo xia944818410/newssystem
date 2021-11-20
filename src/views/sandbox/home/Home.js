@@ -12,9 +12,6 @@ export default function Home() {
       <Button type="primary" onClick={ajax}>
         Button
       </Button>
-      <Button type="primary" onClick={ajax}>
-        Button
-      </Button>
     </div>
   );
 }

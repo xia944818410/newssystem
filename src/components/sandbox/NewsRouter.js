@@ -38,15 +38,16 @@ export default function NewsRouter() {
       axios.get("http://localhost:5000/rights"),
       axios.get("http://localhost:5000/children"),
     ]).then((res) => {
+      // console.log("我是res的数据：",res)
       setBackRouteList([...res[0].data, ...res[1].data]);
       /* 打印得到27个所需的数据 */
-      //  console.log([...res[0].data,...res[1].data]);
+      // console.log([...res[0].data, ...res[1].data]);
       //  console.log("111",BackRouteList);
     });
   }, []);
   return (
     <Switch>
-      {/* <Route path="/home" component={Home}/>
+      {/*   <Route path="/home" component={Home}/>
             <Route path="/user-manage/list" component={UserList}/>
             <Route path="/right-manage/role/list" component={RoleList}/>
             <Route path="/right-manage/right/list" component={RightList}/> */}

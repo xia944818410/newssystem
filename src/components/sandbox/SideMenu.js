@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
+
+import axios from "axios";
+
 import { Layout, Menu } from "antd";
 import "./index.css";
 import { withRouter } from "react-router-dom";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import axios from "axios";
+import { UserOutlined } from "@ant-design/icons";
+
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -19,7 +18,6 @@ const iconList = {
   "/right-manage/role/list": <UserOutlined />,
   "/right-manage/right/list": <UserOutlined />,
 };
-
 
 /* SideMenu组件要想使用props的history属性，需要引入react-router-dom中的WithRouter属性，
    并默认暴露WithRouter(SideMenu),此时react-router 的 history、location、match 三个对象会传入到props对象上，可直接使用props.history属性 */
@@ -58,7 +56,7 @@ function SideMenu(props) {
             key={item.key}
             icon={iconList[item.key]}
             onClick={() => {
-              // console.log("item.key", props);
+              // console.log("item.key***",item.key );
               props.history.push(item.key);
             }}
           >
@@ -69,7 +67,7 @@ function SideMenu(props) {
     });
   };
 
-  // console.log("p", props.location);
+  // console.log("p***", props.location);
   const selectKeys = [props.location.pathname];
 
   // console.log("props.location.pathname",props.location.pathname);
@@ -111,4 +109,4 @@ function SideMenu(props) {
     </Sider>
   );
 }
-export default withRouter(SideMenu);
+export default withRouter(SideMenu)
