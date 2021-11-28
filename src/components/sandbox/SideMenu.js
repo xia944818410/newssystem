@@ -24,7 +24,7 @@ const iconList = {
 function SideMenu(props) {
   const [menu, setMenu] = useState([]);
   useEffect(() => {
-    axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
+    axios.get("/rights?_embed=children").then((res) => {
       // console.log("sidemenu", res.data);
       setMenu(res.data);
     });
@@ -109,4 +109,4 @@ function SideMenu(props) {
     </Sider>
   );
 }
-export default withRouter(SideMenu)
+export default withRouter(SideMenu);

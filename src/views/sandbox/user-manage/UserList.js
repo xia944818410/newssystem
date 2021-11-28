@@ -17,7 +17,7 @@ export default function UserList() {
 
   /* 模态框--添加用户，并设置初始值为false */
   const [isAddVisible, setisAddVisible] = useState(false);
-  
+
   /* 模态框--操作下的小笔按钮 */
   const [isUpdateVisible, setisUpdateVisible] = useState(false);
 
@@ -26,21 +26,21 @@ export default function UserList() {
 
   /* 添加用户模态框里面的角色列表 */
   const [roleList, setroleList] = useState([]);
-  
+
   /* 操作-更新用户-管理员禁用按钮的控制 */
   const [isUpdateDisabled, setisUpdateDisabled] = useState(false);
 
   /* 当前更新项 */
   const [current, setcurrent] = useState(null);
-  
+
   /* 定义添加的Ref.初始值为空 */
   const addForm = useRef(null);
-  
+
   /* 定义更新的Ref */
   const updateForm = useRef(null);
 
   /*  JSON.parse(localStorage.getItem("token")))是进入相应用户名下打印出来的值 */
-  console.log('admin',JSON.parse(localStorage.getItem("token")));
+  console.log("admin", JSON.parse(localStorage.getItem("token")));
   /* roleId=1---超级管理员，roleId=2---区域管理员，roleId=3---区域编辑，region对应区域 ,username用户名*/
   const { roleId, region, username } = JSON.parse(
     localStorage.getItem("token")
@@ -48,9 +48,9 @@ export default function UserList() {
 
   /*  得到用户列表数据：区域 角色列表 用户名 用户状态 操作*/
   useEffect(() => {
-    axios.get("http://localhost:5000/users?_expand=role").then((res) => {
+    axios.get("/users?_expand=role").then((res) => {
       const list = res.data;
-      console.log("用户列表list",list)
+      console.log("用户列表list", list);
       setdataSource(
         roleId === 1
           ? list
@@ -67,7 +67,7 @@ export default function UserList() {
 
   /*  添加用户模态框里面的区域列表数据获取*/
   useEffect(() => {
-    axios.get("http://localhost:5000/regions").then((res) => {
+    axios.get("/regions").then((res) => {
       const list = res.data;
       // console.log("区域列表数据",list)
       setregionList(list);
@@ -76,7 +76,7 @@ export default function UserList() {
 
   /* 添加用户模态框里面的角色列表数据获取 */
   useEffect(() => {
-    axios.get("http://localhost:5000/roles").then((res) => {
+    axios.get("/roles").then((res) => {
       const list = res.data;
       setroleList(list);
     });
@@ -195,7 +195,7 @@ export default function UserList() {
     item.roleState = !item.roleState;
     setdataSource([...dataSource]);
     /* 利用补丁方法patch，更新数据库 */
-    axios.patch(`http://localhost:5000/users/${item.id}`, {
+    axios.patch(`/users/${item.id}`, {
       roleState: item.roleState,
     });
   };
@@ -219,7 +219,7 @@ export default function UserList() {
     /* 当前页面同步 + 后端同步 */
     setdataSource(dataSource.filter((data) => data.id !== item.id));
     /* axios请求，数据库中删除此项 */
-    axios.delete(`http://localhost:5000/users/${item.id}`);
+    axios.delete(`/users/${item.id}`);
   };
 
   /*模态框添加用户，点击确定之后的回调函数*/
@@ -235,7 +235,7 @@ export default function UserList() {
         addForm.current.resetFields();
         /* post到后端，先生成id,再设置datasource,即可利用删除和更新-----------生成一整套数据 */
         axios
-          .post(`http://localhost:5000/users`, {
+          .post(`/users`, {
             /* 先拿到values,再添加另外两个 */
             ...value,
             roleState: true,
@@ -272,14 +272,14 @@ export default function UserList() {
             return {
               ...item,
               ...value,
-              role: roleList.filter((data) => data.id === value.roleId)[0]
+              role: roleList.filter((data) => data.id === value.roleId)[0],
             };
           }
           return item;
         })
       );
       setisUpdateDisabled(!isUpdateDisabled);
-      axios.patch(`http://localhost:5000/users/${current.id}`, value);
+      axios.patch(`/users/${current.id}`, value);
     });
   };
   return (
@@ -307,7 +307,7 @@ export default function UserList() {
         title="添加用户"
         okText="确定"
         cancelText="取消"
-        /*取消回调 */ 
+        /*取消回调 */
         onCancel={() => {
           /* 取消模态框的弹出 */
           setisAddVisible(false);
@@ -323,8 +323,7 @@ export default function UserList() {
           roleList={roleList}
           /* 传入ref */
           ref={addForm}
-        >
-        </UserForm>
+        ></UserForm>
       </Modal>
       {/* 操作--更新用户--模态框 */}
       <Modal

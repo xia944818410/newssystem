@@ -18,7 +18,7 @@ export default function Login(props) {
     // console.log("value",values);
     axios
       .get(
-        `http://localhost:5000/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
+        `/users?username=${values.username}&password=${values.password}&roleState=true&_expand=role`
       )
       .then((res) => {
         // console.log("789", res.data);

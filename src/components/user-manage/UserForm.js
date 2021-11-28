@@ -5,7 +5,6 @@ const { Option } = Select;
 
 /* forwardRef接受reef */
 const UserForm = forwardRef((props, ref) => {
-
   /* 通过isDisabled来控制区域选择按钮 */
   const [isDisabled, setisDisabled] = useState(false);
 
@@ -30,7 +29,7 @@ const UserForm = forwardRef((props, ref) => {
         return true;
       }
     } else {
-    /* 对添加用户操作 */
+      /* 对添加用户操作 */
       if (roleId === 1) {
         return false;
       } else {
@@ -51,11 +50,11 @@ const UserForm = forwardRef((props, ref) => {
         return true;
       }
     } else {
-    /* 对添加用户操作 */
+      /* 对添加用户操作 */
       if (roleId === 1) {
         return false;
       } else {
-        /* 筛选出添加用户时默认的角色 http://localhost:5000/roles 数据在这里获取得到的 */
+        /* 筛选出添加用户时默认的角色 /roles 数据在这里获取得到的 */
         /* 只有当角色为区域编辑时不禁用*/
         return item.id !== 3;
       }
@@ -65,7 +64,7 @@ const UserForm = forwardRef((props, ref) => {
   // console.log("props.regionList数据",props.regionList)
   return (
     <Form
-       /* 接收来自上一级的ref */
+      /* 接收来自上一级的ref */
       ref={ref}
       /* 垂直布局的 */
       layout="vertical"
@@ -139,7 +138,7 @@ const UserForm = forwardRef((props, ref) => {
               setisDisabled(true);
               /* 当选择为超级管理员时，区域默认显示为空，
                   设置ref.current.setFieldsValue()方法使表单数据为空 */
-              console.log("ref",ref);
+              console.log("ref", ref);
               ref.current.setFieldsValue({
                 region: "",
               });

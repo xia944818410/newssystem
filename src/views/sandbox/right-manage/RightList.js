@@ -17,9 +17,9 @@ export default function RightList() {
   const [dataSource, setdataSource] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
+    axios.get("/rights?_embed=children").then((res) => {
       const list = res.data;
-      console.log("请求拿到的数据",list)
+      console.log("请求拿到的数据", list);
       // list[0].children = ""
       /* 找到children为空的数组,赋值为空字符串*/
       list.forEach((item) => {
@@ -65,7 +65,7 @@ export default function RightList() {
               icon={<DeleteOutlined />}
               onClick={() => {
                 confirmMethod(item);
-                console.log("我是点击删除按钮拿到的item:",item);
+                console.log("我是点击删除按钮拿到的item:", item);
               }}
             />
             {/* popover为气泡卡片：点击绿色小笔按钮，会出现页面配置项功能按钮*/}
@@ -106,11 +106,11 @@ export default function RightList() {
     setdataSource([...dataSource]);
     if (item.grade === 1) {
       /* patch有补丁效果，对于不变的数据就不会更新，只改变更新的数据*/
-      axios.patch(`http://localhost:5000/rights/${item.id}`, {
+      axios.patch(`/rights/${item.id}`, {
         pagepermisson: item.pagepermisson,
       });
     } else {
-      axios.patch(`http://localhost:5000/children/${item.id}`, {
+      axios.patch(`/children/${item.id}`, {
         pagepermisson: item.pagepermisson,
       });
     }
@@ -137,14 +137,14 @@ export default function RightList() {
       /* 更新dataSource数据，过滤掉删除的此项id */
       setdataSource(dataSource.filter((data) => data.id !== item.id));
       /* axios请求删除，数据库删除此项id */
-      axios.delete(`http://localhost:5000/rights/${item.id}`);
+      axios.delete(`/rights/${item.id}`);
     } else {
       /* 先筛选拿到一级菜单项 */
       let list = dataSource.filter((data) => data.id === item.rightId);
       /* 过滤掉删除的二级项,再把数据赋值给list[0].cjildren,即是更新list数据 */
       list[0].children = list[0].children.filter((data) => data.id !== item.id);
       setdataSource([...dataSource]);
-      axios.delete(`http://localhost:5000/children/${item.id}`);
+      axios.delete(`/children/${item.id}`);
     }
   };
   return (

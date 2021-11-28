@@ -11,7 +11,6 @@ import axios from "axios";
 const { confirm } = Modal;
 
 export default function RoleList() {
-
   /* 角色列表数据  ID 角色名称 操作 */
   const [dataSource, setdataSource] = useState([]);
 
@@ -43,7 +42,7 @@ export default function RoleList() {
       title: "操作",
       /*当不取dataIndex时，拿到的为所有对象  */
       render: (item) => {
-        // console.log("item拿到的数据",item); 
+        // console.log("item拿到的数据",item);
         return (
           <div>
             {/*此button为红色的删除按钮 */}
@@ -90,12 +89,12 @@ export default function RoleList() {
 
   const deleteMethod = (item) => {
     setdataSource(dataSource.filter((data) => data.id !== item.id));
-    axios.delete(`http://localhost:5000/roles/${item.id}`);
+    axios.delete(`/roles/${item.id}`);
   };
 
   /* 此useEffect获取的为角色列表数据 */
   useEffect(() => {
-    axios.get("http://localhost:5000/roles").then((res) => {
+    axios.get("/roles").then((res) => {
       // console.log("roles",res.data);
       setdataSource(res.data);
     });
@@ -103,7 +102,7 @@ export default function RoleList() {
 
   /* useEffect获取的为模态框列表里面的数据 */
   useEffect(() => {
-    axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
+    axios.get("/rights?_embed=children").then((res) => {
       //    console.log("roles",res.data);
       setrightList(res.data);
     });
@@ -123,14 +122,14 @@ export default function RoleList() {
             ...item,
             rights:
               /* 勾选或者取消勾选后改变了currentRights值，从而更新了rights，在进行对页面进行从新勾选*/
-              currentRights 
+              currentRights,
           };
         }
         return item;
       })
     );
     /* patch有补丁效果，对于不变的数据就不会更新，只改变更新的数据*/
-    axios.patch(`http://localhost:5000/roles/${currentId}`, {
+    axios.patch(`/roles/${currentId}`, {
       rights: currentRights,
     });
   };
@@ -144,8 +143,8 @@ export default function RoleList() {
       setcurrentRights(checkKeys)作用是：得到更新后的checkKeys,并重新获取数据
   */
   const onCheck = (checkKeys) => {
-     /* 点击勾选框之后，打印出来的checkKeys是除勾选框之外的路径 */
-      //  console.log("点击复选框触发：",checkKeys); 
+    /* 点击勾选框之后，打印出来的checkKeys是除勾选框之外的路径 */
+    //  console.log("点击复选框触发：",checkKeys);
     setcurrentRights(checkKeys.checked);
     /*  setcurrentRights(checkKeys.checked)：获得勾选或者取消勾选后的内容，再次更新需要勾选的条款*/
   };
@@ -158,8 +157,7 @@ export default function RoleList() {
         columns={columns}
         /* rowKey的作用：添加唯一的key值属性，不添加会报错 */
         rowKey={(item) => item.id}
-      >
-      </Table>
+      ></Table>
       {/* 模态框 */}
       <Modal
         title="权限分配"
@@ -174,14 +172,14 @@ export default function RoleList() {
           checkable
           /*  checkedKeys是默认勾选框,currentRights拿到的是item.rights路径,
               也即是rightList对应的key值,即是要从rightList列表中默认勾选
-              currentRights(http://localhost:5000/roles,里面的item.rights)
+              currentRights(/roles,里面的item.rights)
           */
           checkedKeys={currentRights}
           /*  onCheck:勾选或者取消勾选复选框 */
           onCheck={onCheck}
           /* 父子节点选中状态不再关联 */
           checkStrictly={true}
-          /*treeData为http://localhost:5000/rights?_embed=children请求得到的数据，始终保持不变*/
+          /*treeData为/rights?_embed=children请求得到的数据，始终保持不变*/
           treeData={rightList}
         />
       </Modal>

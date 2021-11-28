@@ -36,10 +36,7 @@ export default function NewsRouter() {
   const [BackRouteList, setBackRouteList] = useState([]);
   /* 利用promise发送两个请求  */
   useEffect(() => {
-    Promise.all([
-      axios.get("http://localhost:5000/rights"),
-      axios.get("http://localhost:5000/children"),
-    ]).then((res) => {
+    Promise.all([axios.get("/rights"), axios.get("/children")]).then((res) => {
       // console.log("我是res的数据：",res)
       setBackRouteList([...res[0].data, ...res[1].data]);
       /* 打印得到27个所需的数据 */

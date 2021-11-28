@@ -7,6 +7,7 @@ export default function IndexRouter() {
     <HashRouter>
       <Switch>
         <Route path="/login" component={Login} />
+        {/* 每次匹配到路径/，都会执行下面的这个路由 */}
         <Route
           path="/"
           render={() =>
