@@ -1,16 +1,23 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import { Form, Input, Select } from "antd";
+
 const { Option } = Select;
+
+/* forwardRef接受reef */
 const UserForm = forwardRef((props, ref) => {
+
   /* 通过isDisabled来控制区域选择按钮 */
   const [isDisabled, setisDisabled] = useState(false);
+
   /* 接收isUpdateDisabled的状态值，并更新isDisabled，接收父传子*/
   useEffect(() => {
     setisDisabled(props.isUpdateDisabled);
   }, [props.isUpdateDisabled]);
+
   /* 判断是以超管理员，区域管理员，还是区域编辑的身份进入 */
-  console.log(JSON.parse(localStorage.getItem("token")));
+  // console.log("token",JSON.parse(localStorage.getItem("token")));
   const { roleId, region } = JSON.parse(localStorage.getItem("token"));
+
   /* 禁用区域列表的回调 */
   const checkRegionDisabled = (item) => {
     /*对更新用户操作  */
@@ -32,6 +39,7 @@ const UserForm = forwardRef((props, ref) => {
       }
     }
   };
+
   /* 禁用角色列表的回调 */
   const checkRoleDisabled = (item) => {
     if (props.isUpdate) {
@@ -53,8 +61,11 @@ const UserForm = forwardRef((props, ref) => {
       }
     }
   };
+
+  // console.log("props.regionList数据",props.regionList)
   return (
     <Form
+       /* 接收来自上一级的ref */
       ref={ref}
       /* 垂直布局的 */
       layout="vertical"
@@ -101,7 +112,8 @@ const UserForm = forwardRef((props, ref) => {
             <Option
               value={item.value}
               key={item.id}
-              /* 判断是否禁用区域的按钮，当以管理员身份进来的时候，正常显示区域选择；当以另外身份进来的时候，禁用区域选择 */
+              /* 判断是否禁用区域的按钮，当以管理员身份进来的时候，
+                 正常显示区域选择；当以另外身份进来的时候，禁用区域选择 */
               disabled={checkRegionDisabled(item)}
             >
               {item.title}
@@ -121,11 +133,13 @@ const UserForm = forwardRef((props, ref) => {
           /* onChange事件：当角色选择为超级管理员时禁用区域选择按钮，
                         value=1时代表角色选择为超级管理员*/
           onChange={(value) => {
+            // console.log("value",value)
             /* console.log(value, typeof(value)) */ //value的1是字符串的1
             if (value === "1") {
               setisDisabled(true);
-              /* 当选择为超级管理员时，区域默认显示为空 */
-              // console.log("ref",ref);
+              /* 当选择为超级管理员时，区域默认显示为空，
+                  设置ref.current.setFieldsValue()方法使表单数据为空 */
+              console.log("ref",ref);
               ref.current.setFieldsValue({
                 region: "",
               });

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { Redirect, Route, Switch } from "react-router-dom";
 import Home from "../../views/sandbox/home/Home";
 import UserList from "../../views/sandbox/user-manage/UserList";
@@ -13,6 +14,7 @@ import AuditList from "../../views/sandbox/aduit-manage/AuditList";
 import Unpublished from "../../views/sandbox/publish-manage/Unpublished";
 import Published from "../../views/sandbox/publish-manage/Published";
 import Sunset from "../../views/sandbox/publish-manage/Sunset";
+
 import axios from "axios";
 
 const LocalRouterMap = {
@@ -45,22 +47,46 @@ export default function NewsRouter() {
       //  console.log("111",BackRouteList);
     });
   }, []);
+
+  // 当前用户登录信息
+  const {
+    role: { rights },
+  } = JSON.parse(localStorage.getItem("token"));
+
+  /* 删除或者增加权限时，LocalRouterMap[item.key] 必须存在；
+     且权限控制item.pagepermission等于1*/
+  const checkRoute = (item) => {
+    return LocalRouterMap[item.key] && item.pagepermisson;
+  };
+
+  /*查看当前登录信息是否包含item.key  */
+  const checkUserPermission = (item) => {
+    return rights.includes(item.key);
+  };
+
   return (
     <Switch>
       {/*   <Route path="/home" component={Home}/>
             <Route path="/user-manage/list" component={UserList}/>
             <Route path="/right-manage/role/list" component={RoleList}/>
             <Route path="/right-manage/right/list" component={RightList}/> */}
-      {BackRouteList.map((item) => (
-        <Route
-          path={item.key}
-          key={item.key}
-          component={LocalRouterMap[item.key]}
-          exact
-        />
-      ))}
+      {BackRouteList.map((item) => {
+        if (checkRoute(item) && checkUserPermission(item)) {
+          return (
+            <Route
+              path={item.key}
+              key={item.key}
+              component={LocalRouterMap[item.key]}
+              exact
+            />
+          );
+        }
+        return null;
+      })}
+
       {/* exact精确匹配 */}
       <Redirect from="/" to="/home" exact />
+
       {/* <Route path="*" component={Nopermission}/> */}
       {BackRouteList.length > 0 && <Route path="*" component={Nopermission} />}
     </Switch>

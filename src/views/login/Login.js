@@ -12,7 +12,7 @@ import "./Login.css";
    react-router 的 history、location、match 三个对象会传入到props对象上，可直接使用props.history属性 */
 export default function Login(props) {
   /* onFinish是表单收集的数据 */
-  console.log("123465",props)
+  // console.log("123465",props)
   const onFinish = (values) => {
     /* 打印的values值就是表单里接收到的数据 */
     // console.log("value",values);
@@ -26,7 +26,8 @@ export default function Login(props) {
           message.error("用户名或密码不匹配");
         } else {
           console.log("res", res.data);
-          /* 某个管理员登录成功后把JSON.stringify(res.data[0])存入到localStorage中，这里拿到的数据是指某个管理员下的全部数据
+          /* 某个管理员登录成功后把JSON.stringify(res.data[0])存入到localStorage中
+             这里拿到的数据是指某个管理员下的全部数据
              使用localStorage.getItem("token")即可拿到所以数据*/
           localStorage.setItem("token", JSON.stringify(res.data[0]));
           props.history.push("/");

@@ -21,7 +21,7 @@ export default function RoleList() {
   /* 设置modal框visible初始值为false,isModalVisible为其状态*/
   const [isModalVisible, setisModalVisible] = useState(false);
 
-  /* currentRights：勾选或者取消勾选后的框值 */
+  /* currentRights：tree默认勾选的复选框 */
   const [currentRights, setcurrentRights] = useState([]);
 
   /*  currentId可以简单理解为角色列表中对应的ID123*/
@@ -60,7 +60,7 @@ export default function RoleList() {
               shape="circle"
               icon={<EditOutlined />}
               onClick={() => {
-                console.log("点击模态框拿到的item数据",item)
+                // console.log("点击模态框拿到的item数据",item)
                 /* 触发点击事件后，setisModalVisible(true)，弹出模态框 */
                 setisModalVisible(true);
                 /* 触发点击后，需要勾选的框值 */
