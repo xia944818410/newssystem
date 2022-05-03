@@ -23,6 +23,7 @@ const iconList = {
    并默认暴露WithRouter(SideMenu),此时react-router 的 history、location、match 三个对象会传入到props对象上，可直接使用props.history属性 */
 function SideMenu(props) {
   const [menu, setMenu] = useState([]);
+
   useEffect(() => {
     axios.get("/rights?_embed=children").then((res) => {
       // console.log("sidemenu", res.data);

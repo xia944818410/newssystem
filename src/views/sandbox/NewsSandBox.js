@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
-import SideMenu from "../../components/sandbox/SideMenu";
-import TopHeader from "../../components/sandbox/TopHeader";
+//antd
+import { Layout } from "antd";
 /* 引入进度条 */
 import NProgress from "nprogress";
 /* 引入进度条样式 */
 import "nprogress/nprogress.css";
 
+import NewsRouter from "../../components/sandbox/NewsRouter";
+import SideMenu from "../../components/sandbox/SideMenu";
+import TopHeader from "../../components/sandbox/TopHeader";
+
 //css
 import "./NewsSandBox.css";
 
-//antd
-import { Layout } from "antd";
-import NewsRouter from "../../components/sandbox/NewsRouter";
 const { Content } = Layout;
 
 export default function NewsSandBox() {
@@ -21,6 +22,7 @@ export default function NewsSandBox() {
   useEffect(() => {
     NProgress.done();
   });
+
   return (
     <Layout>
       <SideMenu></SideMenu>
