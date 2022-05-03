@@ -99,8 +99,6 @@ export default function RoleList() {
       setdataSource(res.data);
     });
   }, []);
-
-
   /* useEffect获取的为模态框列表里面的数据 */
   useEffect(() => {
     axios.get("/rights?_embed=children").then((res) => {
