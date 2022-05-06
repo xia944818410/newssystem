@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+
 import { Layout, Menu, Dropdown, Avatar } from "antd";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { withRouter } from "react-router-dom";
+
 const { Header } = Layout;
 
 /* TopHeader组件要想使用props的history属性，需要引入react-router-dom中的WithRouter属性，
@@ -16,7 +18,7 @@ function TopHeader(props) {
   const changeCollapsed = () => {
     setCollapsed(!collapsed);
   };
-  
+
   /* localStorage.getItem("token")是login组件中localStorage.setItem所存入的数据;
      结构解析取出roleName和username*/
   const {

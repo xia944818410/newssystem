@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { withRouter } from "react-router-dom";
 
 import axios from "axios";
-
 import { Layout, Menu } from "antd";
-import "./index.css";
-import { withRouter } from "react-router-dom";
 import { UserOutlined } from "@ant-design/icons";
+
+import "./index.css";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -78,7 +78,7 @@ function SideMenu(props) {
     <Sider trigger={null} collapsible collapsed={false}>
       {/* display="flex",flex-direction="column",flex布局，代表主轴为垂直方向*/}
       <div style={{ display: "flex", height: "100%", flexDirection: "column" }}>
-        <div className="logo">新闻管理发布系统</div>
+        <div className="logo">全球新闻管理发布系统</div>
         {/* defaultSelectedKeys后面的参数表示默认展示的内容*/}
         <div style={{ flex: 1, overflow: "auto" }}>
           <Menu
@@ -110,4 +110,5 @@ function SideMenu(props) {
     </Sider>
   );
 }
+
 export default withRouter(SideMenu);
