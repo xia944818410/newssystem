@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Table, Button, Modal, Switch } from "antd";
 
 import axios from "axios";
+import { Table, Button, Modal, Switch } from "antd";
 
 import {
   EditOutlined,
@@ -50,7 +50,7 @@ export default function UserList() {
   useEffect(() => {
     axios.get("/users?_expand=role").then((res) => {
       const list = res.data;
-      console.log("用户列表list", list);
+      // console.log("用户列表list", list);
       setdataSource(
         roleId === 1
           ? list
@@ -205,11 +205,11 @@ export default function UserList() {
       title: "你确定要删除吗?",
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        console.log("OK");
+        // console.log("OK");
         deleteMethod(item);
       },
       onCancel() {
-        console.log("Cancel");
+        // console.log("Cancel");
       },
     });
   };
@@ -229,7 +229,7 @@ export default function UserList() {
       .validateFields()
       .then((value) => {
         /* 点击确定之后，拿到的添加用户表单信息*/ /* 成功时候得到的数据 */
-        // console.log(value)
+        // console.log(123466, value);
         /* 消失模态框 */
         setisAddVisible(false);
         addForm.current.resetFields();
@@ -282,6 +282,7 @@ export default function UserList() {
       axios.patch(`/users/${current.id}`, value);
     });
   };
+
   return (
     // <> </>标签的功能相当于<div></div>作用,并且不会渲染出来<div></div>
     <>
@@ -323,7 +324,7 @@ export default function UserList() {
           roleList={roleList}
           /* 传入ref */
           ref={addForm}
-        ></UserForm>
+        />
       </Modal>
       {/* 操作--更新用户--模态框 */}
       <Modal
@@ -351,7 +352,7 @@ export default function UserList() {
           isUpdateDisabled={isUpdateDisabled}
           /* 区别是更新还是新建用户，默认为false */
           isUpdate={true}
-        ></UserForm>
+        />
       </Modal>
     </>
   );

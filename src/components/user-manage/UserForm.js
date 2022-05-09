@@ -3,7 +3,7 @@ import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
-/* forwardRef接受reef */
+/* forwardRef接受ref */
 const UserForm = forwardRef((props, ref) => {
   /* 通过isDisabled来控制区域选择按钮 */
   const [isDisabled, setisDisabled] = useState(false);
@@ -113,7 +113,7 @@ const UserForm = forwardRef((props, ref) => {
               key={item.id}
               /* 判断是否禁用区域的按钮，当以管理员身份进来的时候，
                  正常显示区域选择；当以另外身份进来的时候，禁用区域选择 */
-              disabled={checkRegionDisabled(item)}
+              // disabled={checkRegionDisabled(item)}
             >
               {item.title}
             </Option>
@@ -132,13 +132,13 @@ const UserForm = forwardRef((props, ref) => {
           /* onChange事件：当角色选择为超级管理员时禁用区域选择按钮，
                         value=1时代表角色选择为超级管理员*/
           onChange={(value) => {
-            // console.log("value",value)
-            /* console.log(value, typeof(value)) */ //value的1是字符串的1
-            if (value === "1") {
+            // console.log("value", value);
+            /* console.log(value, typeof(value)) */
+            if (value === 1) {
               setisDisabled(true);
               /* 当选择为超级管理员时，区域默认显示为空，
                   设置ref.current.setFieldsValue()方法使表单数据为空 */
-              console.log("ref", ref);
+              // console.log("ref", ref);
               ref.current.setFieldsValue({
                 region: "",
               });
@@ -149,7 +149,7 @@ const UserForm = forwardRef((props, ref) => {
         >
           {props.roleList.map((item) => (
             <Option
-              value={item.value}
+              value={item.id}
               key={item.id}
               disabled={checkRoleDisabled(item)}
             >

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+import axios from "axios";
 import { Table, Button, Modal, Tree } from "antd";
 import {
   EditOutlined,
@@ -6,23 +8,17 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 
-import axios from "axios";
-
 const { confirm } = Modal;
 
 export default function RoleList() {
   /* 角色列表数据  ID 角色名称 操作 */
   const [dataSource, setdataSource] = useState([]);
-
   /* 模态框列表的数据 */
-  const [rightList, setrightList] = useState([]);
-
+  const [rightList, setRightList] = useState([]);
   /* 设置modal框visible初始值为false,isModalVisible为其状态*/
   const [isModalVisible, setisModalVisible] = useState(false);
-
   /* currentRights：tree默认勾选的复选框 */
   const [currentRights, setcurrentRights] = useState([]);
-
   /*  currentId可以简单理解为角色列表中对应的ID123*/
   const [currentId, setcurrentId] = useState(0);
 
@@ -78,11 +74,11 @@ export default function RoleList() {
       title: "你确定要删除吗?",
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        console.log("OK");
+        // console.log("OK");
         deleteMethod(item);
       },
       onCancel() {
-        console.log("Cancel");
+        // console.log("Cancel");
       },
     });
   };
@@ -95,15 +91,14 @@ export default function RoleList() {
   /* 此useEffect获取的为角色列表数据 */
   useEffect(() => {
     axios.get("/roles").then((res) => {
-      // console.log("roles",res.data);
       setdataSource(res.data);
     });
   }, []);
+
   /* useEffect获取的为模态框列表里面的数据 */
   useEffect(() => {
     axios.get("/rights?_embed=children").then((res) => {
-      //    console.log("roles",res.data);
-      setrightList(res.data);
+      setRightList(res.data);
     });
   }, []);
 
@@ -156,7 +151,7 @@ export default function RoleList() {
         columns={columns}
         /* rowKey的作用：添加唯一的key值属性，不添加会报错 */
         rowKey={(item) => item.id}
-      ></Table>
+      />
       {/* 模态框 */}
       <Modal
         title="权限分配"

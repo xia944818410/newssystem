@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Button, Modal, Popover, Switch } from "antd";
 
 import axios from "axios";
-
+import { Table, Tag, Button, Modal, Popover, Switch } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -19,7 +18,7 @@ export default function RightList() {
   useEffect(() => {
     axios.get("/rights?_embed=children").then((res) => {
       const list = res.data;
-      console.log("请求拿到的数据", list);
+      // console.log("请求拿到的数据", list);
       // list[0].children = ""
       /* 找到children为空的数组,赋值为空字符串*/
       list.forEach((item) => {
@@ -65,7 +64,7 @@ export default function RightList() {
               icon={<DeleteOutlined />}
               onClick={() => {
                 confirmMethod(item);
-                console.log("我是点击删除按钮拿到的item:", item);
+                // console.log("我是点击删除按钮拿到的item:", item);
               }}
             />
             {/* popover为气泡卡片：点击绿色小笔按钮，会出现页面配置项功能按钮*/}
@@ -99,6 +98,7 @@ export default function RightList() {
       },
     },
   ];
+
   const switchMethod = (item) => {
     item.pagepermisson = item.pagepermisson === 1 ? 0 : 1;
     // console.log("wfw",item);
@@ -115,20 +115,22 @@ export default function RightList() {
       });
     }
   };
+
   /* 点击删除弹出的confirm的确认框 */
   const confirmMethod = (item) => {
     confirm({
       title: "你确定要删除吗?",
       icon: <ExclamationCircleOutlined />,
       onOk() {
-        console.log("OK");
+        // console.log("OK");
         deleteMethod(item);
       },
       onCancel() {
-        console.log("Cancel");
+        // console.log("Cancel");
       },
     });
   };
+
   /* confirm确认框中的删除确认 */
   const deleteMethod = (item) => {
     /* 当前页面同步 + 后端同步 */
@@ -147,6 +149,7 @@ export default function RightList() {
       axios.delete(`/children/${item.id}`);
     }
   };
+
   return (
     <div>
       {/* 表格支持树形数据的展示（展开 + — 符号），当数据中有 children 字段时会自动展示为树形表格，
@@ -156,7 +159,6 @@ export default function RightList() {
         columns={columns}
         pagination={{ pageSize: 5 }}
       />
-      ;
     </div>
   );
 }
