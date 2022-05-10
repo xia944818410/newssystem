@@ -22,7 +22,7 @@ function TopHeader(props) {
   /* localStorage.getItem("token")是login组件中localStorage.setItem所存入的数据;
      结构解析取出roleName和username*/
   const {
-    role: { rights, roleName },
+    role: { roleName },
     username,
   } = JSON.parse(localStorage.getItem("token"));
 

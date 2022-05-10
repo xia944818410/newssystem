@@ -46,7 +46,8 @@ export default function UserList() {
     localStorage.getItem("token")
   );
 
-  /*  得到用户列表数据：区域 角色列表 用户名 用户状态 操作*/
+  /* 得到用户列表数据：区域 角色列表 用户名 用户状态 操作 
+      roleId =1 为超级管理员 */
   useEffect(() => {
     axios.get("/users?_expand=role").then((res) => {
       const list = res.data;

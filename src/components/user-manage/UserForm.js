@@ -113,7 +113,7 @@ const UserForm = forwardRef((props, ref) => {
               key={item.id}
               /* 判断是否禁用区域的按钮，当以管理员身份进来的时候，
                  正常显示区域选择；当以另外身份进来的时候，禁用区域选择 */
-              // disabled={checkRegionDisabled(item)}
+              disabled={checkRegionDisabled(item)}
             >
               {item.title}
             </Option>
